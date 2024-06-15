@@ -1,0 +1,91 @@
+﻿<Page
+    x:Class="Camera_Client.Pages.CameraSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Camera_Client.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <CommandBar Grid.Column="0" DefaultLabelPosition="Right">
+            <AppBarButton Icon="Back" Click="{x:Bind Model.GoBack}" />
+        </CommandBar>
+
+        <CommandBar Grid.Column="1" DefaultLabelPosition="Right" VerticalAlignment="Stretch">
+        </CommandBar>
+
+        <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1">
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
+                <StackPanel Margin="10">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">All settings here, unless stated, will reboot the server</TextBlock>
+                    <Rectangle Height="10" Visibility="{x:Bind Model.ErrorShowing, Mode=OneWay}" />
+                    <TextBlock Visibility="{x:Bind Model.ErrorShowing, Mode=OneWay}" Text="{x:Bind Model.Error, Mode=TwoWay}" Foreground="Red"/>
+                    <Rectangle Height="10" Visibility="{x:Bind Model.ErrorShowing, Mode=OneWay}" />
+
+                </StackPanel>
+
+                <TextBlock>Basic Settings</TextBlock>
+                <TextBox Width="400" PlaceholderText="Email" Text="{x:Bind Model.Config.email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                <Rectangle Height="10" />
+                <TextBox Width="400" PlaceholderText="Device Name" Text="{x:Bind Model.Config.cameraName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                <Rectangle Height="10" />
+                <Button Content="Update" Click="{x:Bind Model.UpdateConfig}" />
+
+
+                <Rectangle Height="10" />
+                <Rectangle Height="1" Fill="Gray" />
+                <Rectangle Height="10" />
+
+                <TextBlock>Change Hostname</TextBlock>
+                <TextBox Text="{x:Bind Model.Hostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="{x:Bind Model.HostText_Changed}" />
+                <Button Content="Update" Click="{x:Bind Model.UpdateHostname}" />
+
+                <Rectangle Height="10" />
+
+                <TextBlock>Connect to Wifi</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <ListView Height="200" ItemsSource="{x:Bind Model.Wifi, Mode=OneWay}" SelectedItem="{x:Bind Model.SelectedWifi, Mode=TwoWay}" />
+                    <StackPanel Width="200">
+                        <TextBox PlaceholderText="SSID" Text="{x:Bind Model.SelectedWifi.ssid, Mode=TwoWay}" IsReadOnly="True" />
+                        <Rectangle Height="10" />
+                        <PasswordBox PlaceholderText="Password" Password="{x:Bind Model.WifiPassword, Mode=TwoWay}" />
+                        <Rectangle Height="10" />
+
+                        <Button Click="{x:Bind Model.ConnectWifi}">Connect</Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <Rectangle Height="10"/>
+                <TextBlock>Authenticate</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="Needs Login" IsChecked="{x:Bind Model.Config.needsAuth, Mode=TwoWay}" IsEnabled="False"  Margin="0,0,10,0"/>
+                    <Button Content="Open Login" Click="{x:Bind Model.OpenLogin}" />
+                </StackPanel>
+                
+                <Rectangle Height="10"/>
+
+                <StackPanel Visibility="{x:Bind Model.AuthBegun, Mode=OneWay}">
+                    <PasswordBox PlaceholderText="Password" Password="{x:Bind Model.AuthPassword, Mode=TwoWay}" />
+                    <Rectangle Height="10" />
+
+                    <Button Click="{x:Bind Model.Authenticate}">Authenticate</Button>
+                </StackPanel>
+
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

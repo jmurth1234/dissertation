@@ -1,0 +1,33 @@
+{
+  "name": "camera-server-js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "DEBUG=camera-server-js:* pm2 start ./bin/www --watch",
+    "start": "pm2 start ./bin/www --watch",
+    "stop": "pm2 start ./bin/www",
+    "logs": "pm2 logs"
+  },
+  "dependencies": {
+    "agenda": "^3.1.0",
+    "debug": "~4.1.1",
+    "express": "~4.17.1",
+    "file-type": "^14.3.0",
+    "googleapis": "39",
+    "mdns": "^2.5.1",
+    "mongodb": "^3.5.6",
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.6.0",
+    "opencv4nodejs": "^5.5.0",
+    "pi-wifi": "^1.2.0",
+    "through2": "^3.0.1",
+    "yup": "^0.28.4"
+  },
+  "devDependencies": {},
+  "nodemonConfig": {
+    "ignore": [
+      "frames/*"
+    ],
+    "delay": "2500"
+  }
+}

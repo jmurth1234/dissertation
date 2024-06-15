@@ -1,0 +1,92 @@
+﻿<Page
+    x:Class="Camera_Client.Pages.EditSchedule"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Camera_Client.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <CommandBar Grid.Column="0" DefaultLabelPosition="Right">
+            <AppBarButton Icon="Back" Click="{x:Bind Model.GoBack}" />
+        </CommandBar>
+
+        <CommandBar Grid.Column="1" DefaultLabelPosition="Right">
+            <AppBarButton Visibility="{x:Bind Model.IsEditing}" Icon="Delete" Label="Delete" Click="{x:Bind Model.Delete}" />
+            <AppBarButton Icon="Save" Label="Save" Click="{x:Bind Model.Save}" />
+        </CommandBar>
+
+        <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1">
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
+                <Rectangle Height="10" Visibility="{x:Bind Model.ErrorShowing, Mode=OneWay}" />
+                <TextBlock Visibility="{x:Bind Model.ErrorShowing, Mode=OneWay}" Text="{x:Bind Model.Error, Mode=TwoWay}" Foreground="Red"/>
+                <Rectangle Height="10" Visibility="{x:Bind Model.ErrorShowing, Mode=OneWay}" />
+
+                <TextBlock>Start Time</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <controls:NumberBox PlaceholderText="HH" Value="{x:Bind Model.Record.startHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="23" Margin="0,0,5,0" />
+                    <controls:NumberBox PlaceholderText="MM" Value="{x:Bind Model.Record.startMinute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="59" />
+                </StackPanel>
+
+                <Rectangle Height="10" />
+
+                <TextBlock>End Time</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <controls:NumberBox PlaceholderText="HH" Value="{x:Bind Model.Record.endHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="23" Margin="0,0,5,0" />
+                    <controls:NumberBox PlaceholderText="MM" Value="{x:Bind Model.Record.endMinute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="59" />
+                </StackPanel>
+
+                <Rectangle Height="10" />
+
+                <TextBlock>Days to run</TextBlock>
+                <ListView SelectionMode="Multiple" ItemsSource="{x:Bind Model.Days}" SelectionChanged="{x:Bind Model.ChangeSelection}" Loaded="{x:Bind Model.DaysLoaded}"></ListView>
+
+                <Rectangle Height="10" />
+                <TextBlock>Time Between Recordings (minutes)</TextBlock>
+                <controls:NumberBox PlaceholderText="Minutes" Value="{x:Bind Model.Record.runEvery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="1" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <TextBlock>How long to record (seconds)</TextBlock>
+                <controls:NumberBox PlaceholderText="Seconds" Value="{x:Bind Model.Record.runFor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="1" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <TextBlock>Optional comment about this schedule</TextBlock>
+                <TextBox PlaceholderText="Comment" Text="{x:Bind Model.Record.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <TextBlock>Schedule Priority</TextBlock>
+                <controls:NumberBox Value="{x:Bind Model.Record.priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <TextBlock>Framerate</TextBlock>
+                <controls:NumberBox PlaceholderText="FPS" Value="{x:Bind Model.Record.framerate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="1" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <TextBlock>Check motion every x frames (lower is more accurate)</TextBlock>
+                <controls:NumberBox PlaceholderText="Frames" Value="{x:Bind Model.Record.motionAccuracy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="1" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <TextBlock>Size of motion to trigger</TextBlock>
+                <controls:NumberBox PlaceholderText="Area" Value="{x:Bind Model.Record.motionSensitivity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="1" Margin="0,0,5,0" />
+
+                <Rectangle Height="10" />
+                <CheckBox Content="Upload video even if no motion detected" IsChecked="{x:Bind Model.Record.alwaysUpload, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+
+</Page>
